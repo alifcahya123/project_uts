@@ -1,0 +1,7 @@
+{
+  "name": "superliga",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
