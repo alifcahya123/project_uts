@@ -1,0 +1,74 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/home"></ion-back-button>
+    </ion-buttons>
+    <ion-title>{{ team?.nama }}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="team-header-profile ion-padding ion-text-center">
+    <img [src]="team?.logo" class="main-logo" />
+    <h1>{{ team?.nama }}</h1>
+    <ion-badge color="light">{{ team?.spesifikasi.julukan }}</ion-badge>
+  </div>
+
+  <ion-segment [(ngModel)]="activeTab" mode="md">
+    <ion-segment-button value="info">
+      <ion-label>Profil</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="prestasi">
+      <ion-label>Prestasi</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="skuad">
+      <ion-label>Skuad</ion-label>
+    </ion-segment-button>
+  </ion-segment>
+
+  <div [ngSwitch]="activeTab" class="ion-padding">
+    <div *ngSwitchCase="'info'">
+      <h3>Sejarah Awal</h3>
+      <p class="sejarah-text">{{ team?.sejarah }}</p>
+
+      <ion-list lines="full">
+        <ion-item>
+          <ion-icon name="home-outline" slot="start"></ion-icon>
+          <ion-label>
+            <h3>Stadion Utama</h3>
+            <p>{{ team?.spesifikasi.stadion }}</p>
+          </ion-label>
+        </ion-item>
+        <ion-item>
+          <ion-icon name="calendar-outline" slot="start"></ion-icon>
+          <ion-label>
+            <h3>Berdiri</h3>
+            <p>Tahun {{ team?.tahunBerdiri }}</p>
+          </ion-label>
+        </ion-item>
+      </ion-list>
+    </div>
+
+    <div *ngSwitchCase="'prestasi'">
+      <div class="timeline">
+        <div class="timeline-item" *ngFor="let p of team?.prestasi">
+          <div class="year-marker">{{ p.tahun }}</div>
+          <div class="content-marker">
+            <p>{{ p.ket }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div *ngSwitchCase="'skuad'">
+      <ion-list>
+        <ion-item *ngFor="let p of team?.lineup; let i = index">
+          <ion-avatar slot="start">
+            <div class="number-circle">{{ i + 1 }}</div>
+          </ion-avatar>
+          <ion-label>{{ p }}</ion-label>
+        </ion-item>
+      </ion-list>
+    </div>
+  </div>
+</ion-content>

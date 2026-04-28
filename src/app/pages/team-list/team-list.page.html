@@ -1,0 +1,40 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/home"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Daftar Tim Liga 1</ion-title>
+  </ion-toolbar>
+
+  <ion-toolbar color="primary">
+    <ion-searchbar
+      placeholder="Cari klub favorit..."
+      (ionInput)="handleSearch($event)"
+      class="custom-search"
+    >
+    </ion-searchbar>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <ion-list lines="full">
+    <ion-item
+      *ngFor="let team of filteredTeams"
+      [routerLink]="['/team-detail', team.id]"
+      detail="true"
+      class="animate__animated animate__fadeIn"
+    >
+      <ion-label>
+        <h2 style="font-weight: bold">{{ team.nama }}</h2>
+        <p>{{ team.kota }}</p>
+        <ion-note color="medium" style="font-size: 12px"
+          >Berdiri: {{ team.tahunBerdiri }}</ion-note
+        >
+      </ion-label>
+    </ion-item>
+  </ion-list>
+
+  <div *ngIf="filteredTeams.length === 0" class="ion-text-center ion-padding">
+    <p>Tim tidak ditemukan...</p>
+  </div>
+</ion-content>
