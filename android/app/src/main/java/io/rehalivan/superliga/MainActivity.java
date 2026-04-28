@@ -1,4 +1,4 @@
-package io.ionic.starter;
+package io.rehalivan.superliga;
 
 import com.getcapacitor.BridgeActivity;
 
