@@ -4,6 +4,12 @@
       <ion-back-button defaultHref="/home"></ion-back-button>
     </ion-buttons>
     <ion-title #pageTitle tabindex="-1">{{ team?.nama }}</ion-title>
+    
+    <ion-buttons slot="end">
+      <ion-button (click)="toggleFavorit()">
+        <ion-icon slot="icon-only" [name]="isFavorit ? 'heart' : 'heart-outline'" [color]="isFavorit ? 'danger' : 'light'"></ion-icon>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
@@ -33,14 +39,14 @@
 
       <ion-list lines="full">
         <ion-item>
-          <ion-icon name="home-outline" slot="start"></ion-icon>
+          <ion-icon name="home-outline" slot="start" color="primary"></ion-icon>
           <ion-label>
             <h3>Stadion Utama</h3>
             <p>{{ team?.spesifikasi.stadion }}</p>
           </ion-label>
         </ion-item>
         <ion-item>
-          <ion-icon name="calendar-outline" slot="start"></ion-icon>
+          <ion-icon name="calendar-outline" slot="start" color="primary"></ion-icon>
           <ion-label>
             <h3>Berdiri</h3>
             <p>Tahun {{ team?.tahunBerdiri }}</p>
@@ -70,5 +76,36 @@
         </ion-item>
       </ion-list>
     </div>
+  </div>
+
+  <hr class="section-divider" />
+
+  <h3 class="section-title ion-padding-horizontal">Ruang Diskusi Fans</h3>
+  
+  <ion-card class="form-komentar-card">
+    <ion-card-content>
+      <ion-item lines="underline">
+        <ion-input label="Nama Anda" labelPlacement="stacked" placeholder="Tulis nama disini..." [(ngModel)]="inputNama"></ion-input>
+      </ion-item>
+      <ion-item lines="underline" class="ion-margin-top">
+        <ion-textarea label="Komentar Suara Fans" labelPlacement="stacked" placeholder="Berikan komentar atau dukungan hangat..." [(ngModel)]="inputKomentar"></ion-textarea>
+      </ion-item>
+      <ion-button expand="block" class="ion-margin-top tombol-kirim" (click)="kirimKomentar()">
+        <ion-icon slot="start" name="send-outline"></ion-icon>
+        Kirim Komentar
+      </ion-button>
+    </ion-card-content>
+  </ion-card>
+
+  <div class="daftar-komentar ion-padding-horizontal ion-padding-bottom">
+    <ion-item *ngFor="let kmt of daftarKomentar" class="item-komentar" lines="none">
+      <ion-avatar slot="start" class="avatar-komentar">
+        <div class="avatar-placeholder">{{ kmt.nama.charAt(0).toUpperCase() }}</div>
+      </ion-avatar>
+      <ion-label>
+        <h3><span class="nama-user">{{ kmt.nama }}</span> <span class="waktu-komentar">{{ kmt.waktu }}</span></h3>
+        <p class="ion-text-wrap isi-teks-komentar">{{ kmt.teks }}</p>
+      </ion-label>
+    </ion-item>
   </div>
 </ion-content>

@@ -14,27 +14,39 @@
     >
     </ion-searchbar>
   </ion-toolbar>
+
+  <ion-toolbar color="primary" class="ion-no-padding">
+    <ion-segment [(ngModel)]="listFilter" (ionChange)="applyListFilter()" mode="md" style="--background: transparent; color: white;">
+      <ion-segment-button value="all">
+        <ion-label style="color: white;">Semua Tim</ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="fav">
+        <ion-label style="color: white;">⭐ Favorit Saya</ion-label>
+      </ion-segment-button>
+    </ion-segment>
+  </ion-toolbar>
 </ion-header>
 
 <ion-content class="ion-padding">
-  <ion-list lines="full">
+  <ion-list lines="full" *ngIf="finalFilteredTeams.length > 0">
     <ion-item
-      *ngFor="let team of filteredTeams"
+      *ngFor="let team of finalFilteredTeams"
       [routerLink]="['/team-detail', team.id]"
       detail="true"
       class="animate__animated animate__fadeIn"
     >
       <ion-label>
-        <h2 style="font-weight: bold">{{ team.nama }}</h2>
-        <p>{{ team.kota }}</p>
-        <ion-note color="medium" style="font-size: 12px"
-          >Berdiri: {{ team.tahunBerdiri }}</ion-note
-        >
+        <h2 style="font-weight: bold; color: #0052cc;">{{ team.nama || team.name }}</h2>
+        <p>{{ team.kota || team.city }}</p>
+        <ion-note color="medium" style="font-size: 12px">
+          Berdiri: Tahun {{ team.tahunBerdiri }}
+        </ion-note>
       </ion-label>
     </ion-item>
   </ion-list>
 
-  <div *ngIf="filteredTeams.length === 0" class="ion-text-center ion-padding">
-    <p>Tim tidak ditemukan...</p>
+  <div *ngIf="finalFilteredTeams.length === 0" class="ion-text-center ion-padding">
+    <ion-icon name="folder-open-outline" style="font-size: 3rem; color: #ccc;"></ion-icon>
+    <p style="color: #888; margin-top: 10px;">Tim tidak ditemukan di kategori ini...</p>
   </div>
 </ion-content>
